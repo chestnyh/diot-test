@@ -11,7 +11,7 @@ export interface LocalDataLoaderConfig{
 export class LocalDataLoader implements DataLoader<Patient>{
 
     private _isReady : boolean = false;
-    private _sourceFile : string;
+    private _sourceFile : string = "";
     private _fileEncoding: string = "utf8";
     private _rowSeparator : string = "\n";
     private _valueSeparator : string = "|";
@@ -58,12 +58,12 @@ export class LocalDataLoader implements DataLoader<Patient>{
 
     }
 
-    private createObjFromArrays(keys: string[], values: any[]){
+    static createObjFromArrays(keys: string[], values: any[]): {[key: string]: any}{
 
         if(keys.length !== values.length)
             throw new Error("Keys length must be equal values length");
 
-        const obj = {};
+        const obj : {[key: string]: any} = {};
 
         for ( let i = 0; i < keys.length; i++ ){
             obj[keys[i]] = values[i];
@@ -85,7 +85,7 @@ export class LocalDataLoader implements DataLoader<Patient>{
 
             const row: string[] = rows[i].split(this._valueSeparator);
 
-            result.push(this.createObjFromArrays(keys, row));
+            result.push(LocalDataLoader.createObjFromArrays(keys, row));
 
 
         }
@@ -97,11 +97,11 @@ export class LocalDataLoader implements DataLoader<Patient>{
     getData(): Promise<Patient[]> {
 
         if(!this._isReady)
-            throw new Error("Data source is not ready to get data");
+            throw new Error("Data source is not ready to get data. Your data source do not installed");
 
         return new Promise((resolve, reject) => {
 
-            fs.readFile(this._sourceFile, this._fileEncoding, (err, data)=>{
+            fs.readFile(this._sourceFile, this._fileEncoding, (err: Error | null, data: string)=>{
 
                 if(err)
                     reject(err);
@@ -113,8 +113,6 @@ export class LocalDataLoader implements DataLoader<Patient>{
             });
 
         });
-
-        //TODO download data from source
 
     }
 

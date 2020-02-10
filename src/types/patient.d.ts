@@ -1,4 +1,4 @@
-export interface Patient{
+export type Patient = {
     Program_Identifier : number,
     Data_Source: string,
     Card_Number: number,

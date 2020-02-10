@@ -1,32 +1,21 @@
-import {DataStorage} from "../index";
+import {DataStorage} from "./data-storage";
+import {Email} from "../../types/email";
+import {emailsSchema} from "./schemas"
+import * as mongoose from "mongoose";
 
+export function isEmail(data: any): data is Email {
 
-export class EmailsDataStorage implements DataStorage{
+    // TODO validation script
+    return true;
+}
 
-    private _isReady: boolean;
+/*
+export async function emailsDataStorageCreator(schema: mongoose.Schema, validationFunction: (data: any) => boolean): Promise<EmailsDataStorage>{
 
-    constructor() {
-
-
-    }
-
-    delete(where: any): any {
-
-
-    }
-
-    insert(data: any): void {
-    }
-
-    get isReady(): boolean {
-        return this._isReady;
-    }
-
-    select(where: any): any {
-    }
-
-    update(where: any, data: any): void {
-    }
-
+    return new EmailsDataStorage(emailsSchema, isEmail);
 
 }
+*/
+
+
+export class EmailsDataStorage extends DataStorage<Email> {}

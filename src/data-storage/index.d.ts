@@ -1,9 +1,9 @@
-export interface DataStorage {
+export interface IDataStorage<Data> {
 
     isReady: boolean,
-    insert(data: any): void,
-    update(where: any, data: any): void,
-    select(where: any): any,
-    delete(where: any): any
+    insert(data: any): Promise<void> | void,
+    update(where: any, data: any): Promise<void> | void,
+    select(where: any): Promise<Data> | Data,
+    delete(where: any): Promise<void> | void
     
 }

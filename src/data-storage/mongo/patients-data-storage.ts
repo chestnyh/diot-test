@@ -1,39 +1,20 @@
-import {DataStorage} from "../index";
+import {DataStorage} from "./data-storage";
 import * as mongoose from "mongoose";
+import {patientsSchema} from "./schemas"
+import {Patient} from "../../types/patient"
 
 
-export async function patientsDataStorageCreator(): Promise<PatientsDataStorage>{
-    // TODO implementation
+export function isPatient(data: any): data is Patient {
+
+    // TODO validation script
+    return true;
 }
 
-export class PatientsDataStorage implements DataStorage{
 
-    private _isReady: boolean;
+/*export async function patientsDataStorageCreator(schema: mongoose.Schema, validationFunction: (data: any) => boolean): Promise<PatientsDataStorage>{
 
-    constructor() {
+    return new PatientsDataStorage(patientsSchema, isPatient);
 
+}*/
 
-    }
-
-    delete(where: any): any {
-        // TODO realize method
-    }
-
-    insert(data: any): void {
-        // TODO realize method
-    }
-
-    get isReady(): boolean {
-        return this._isReady;
-    }
-
-    select(where: any): any {
-        // TODO realize method
-    }
-
-    update(where: any, data: any): void {
-        // TODO realize method
-    }
-
-
-}
+export class PatientsDataStorage extends DataStorage<Patient> {}

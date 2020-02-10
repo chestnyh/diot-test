@@ -1,12 +1,21 @@
 import {DataLoader} from "./data-loader/index";
 import {LocalDataLoader} from "./data-loader/local-data-loader";
-import {DataStorage} from "./data-storage/index";
-import {PatientsDataStorage as MongoPatientsDataStorage} from "./data-storage/mongo/patients-data-storage";
+import {IDataStorage} from "./data-storage/index";
+
+import {PatientsDataStorage as MongoPatientsDataStorage, isPatient} from "./data-storage/mongo/patients-data-storage";
+import {EmailsDataStorage as MongoEmailsDataStorage, isEmail} from "./data-storage/mongo/emails-data-storage";
 import {Patient} from "./types/patient";
+import {Email} from "./types/email";
 import * as path from "path";
 
+// mongo schemas
+import {patientsSchema, emailsSchema} from "./data-storage/mongo/schemas";
+
 const dataLoader : DataLoader<Patient> = new LocalDataLoader();
-const dataStorage: DataStorage = new MongoPatientsDataStorage();
+
+
+const patientsDataStorage: IDataStorage<Patient> = new MongoPatientsDataStorage(patientsSchema, isPatient);
+const emailsDataStorage: IDataStorage<Email> = new MongoEmailsDataStorage(emailsSchema, isEmail);
 
 // load data source
 
