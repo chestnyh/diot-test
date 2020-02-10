@@ -13,35 +13,24 @@ import {patientsSchema, emailsSchema} from "./data-storage/mongo/schemas";
 
 const dataLoader : DataLoader<Patient> = new LocalDataLoader();
 
-
-const patientsDataStorage: IDataStorage<Patient> = new MongoPatientsDataStorage(patientsSchema, isPatient);
-const emailsDataStorage: IDataStorage<Email> = new MongoEmailsDataStorage(emailsSchema, isEmail);
-
-// load data source
-
 async function start(){
 
-    await dataLoader.setSource(path.join(__dirname, "..", "loadData")); // TODO get file from params
+    const patientsDataStorage: IDataStorage<Patient> = new MongoPatientsDataStorage(patientsSchema, "patients", isPatient);
+    const emailsDataStorage: IDataStorage<Email> = new MongoEmailsDataStorage(emailsSchema,"emails", isEmail);
+
+    await dataLoader.setSource(path.join(__dirname, "..", "loadData"));
 
     const data = await dataLoader.getData();
+
+    for(let i = 0; i< data.length; i++){
+        await patientsDataStorage.insert(data[i])
+    }
+
+
+
+
 
 }
 
 
 start();
-
-
-//if(!dataLoader.isExist)
-    //throw new Error("Source does not exist");
-
-// Data storage
-
-//if(!dataStorage.isReady)
-//    throw new Error("Can't connect to database");
-
-// Main logic
-
-// Create connection with mongoDB use mongoose
-
-
-// Go through data and validate it
