@@ -1,5 +1,5 @@
 import * as fs from "fs"
-import {DataLoader} from "./index"
+import {IDataLoader} from "./index"
 import {Patient} from "../types/patient";
 
 export interface LocalDataLoaderConfig{
@@ -8,7 +8,7 @@ export interface LocalDataLoaderConfig{
     valueSeparator?: string
 }
 
-export class LocalDataLoader implements DataLoader<Patient>{
+export class LocalDataLoader implements IDataLoader<Patient>{
 
     private _isReady : boolean = false;
     private _sourceFile : string = "";

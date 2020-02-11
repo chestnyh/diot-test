@@ -1,12 +1,14 @@
 {
   "name": "diot-test",
   "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./build/app.js"
+  },
   "dependencies": {
     "@types/mongoose": "^5.7.0",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.8.11"
-  },
-  "devDependencies": {
+    "mongoose": "^5.8.11",
     "@types/node": "^13.7.0"
   }
 }

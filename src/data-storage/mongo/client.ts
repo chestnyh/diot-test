@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 
-// TODO through configs
-mongoose.connect('mongodb://localhost:27017/diot-test', { useUnifiedTopology: true, useNewUrlParser: true });
+const MONGODB_HOST = process.env.MONGODB_HOST || "localhost";
+const MONGODB_PORT = process.env.MONGO_PORT || 27017;
+const MONGODB_DB = process.env.MONGO_DB || "diot-test";
+
+
+mongoose.connect(`mongodb://${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_DB}`, { useUnifiedTopology: true, useNewUrlParser: true });
 
 const db = mongoose.connection;
 
