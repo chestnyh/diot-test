@@ -9,13 +9,4 @@ export function isEmail(data: any): data is Email {
     return true;
 }
 
-/*
-export async function emailsDataStorageCreator(schema: mongoose.Schema, validationFunction: (data: any) => boolean): Promise<EmailsDataStorage>{
-
-    return new EmailsDataStorage(emailsSchema, isEmail);
-
-}
-*/
-
-
 export class EmailsDataStorage extends DataStorage<Email> {}

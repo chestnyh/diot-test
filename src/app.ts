@@ -17,16 +17,41 @@ import {Email} from "./types/email";
 
 import {FileReporter} from "./reports/file-reporter"
 
+import {applyHandlers} from "./handlers"
+
 // mongo schemas
 import {patientsSchema, emailsSchema} from "./data-storage/mongo/schemas";
 
 // Add config to process obj
 dotenv.config({path:path.join(__dirname, "..", ".env")});
 
-const dataLoader : IDataLoader<Patient> = new LocalDataLoader();
-dataLoader.setSource(path.join(__dirname, "..", "loadData")); // TODO with config
+const loadFilePath: string = path.join(__dirname, "..", "loadData"); // TODO through config
+const reportFilePath: string = path.join(__dirname, "..", "report"); // TODO through config
 
-const patientsDataStorage: IDataStorage<Patient> = new MongoPatientsDataStorage(patientsSchema, "patients", isPatient);
-const emailsDataStorage: IDataStorage<Email> = new MongoEmailsDataStorage(emailsSchema,"emails", isEmail);
+async function  main(){
 
-const report: IReport  = new FileReporter(path.join(__dirname, "..", "report")); // TODO with config
+    const dataLoader : IDataLoader<Patient> = new LocalDataLoader();
+    await dataLoader.setSource(loadFilePath); //
+
+    const patientsDataStorage: IDataStorage<Patient> = new MongoPatientsDataStorage(patientsSchema, "patients", isPatient);
+    const emailsDataStorage: IDataStorage<Email> = new MongoEmailsDataStorage(emailsSchema,"emails", isEmail);
+
+    const report: IReport  = new FileReporter(reportFilePath);
+
+    const data: Patient[] = await dataLoader.getData();
+
+    console.log(data);
+
+
+    for(let i = 0; i < data.length; i++){
+
+        await applyHandlers<Patient>(data[i]);
+
+    }
+
+}
+
+main();
+
+
+

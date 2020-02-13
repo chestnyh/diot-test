@@ -10,11 +10,4 @@ export function isPatient(data: any): data is Patient {
     return true;
 }
 
-
-/*export async function patientsDataStorageCreator(schema: mongoose.Schema, validationFunction: (data: any) => boolean): Promise<PatientsDataStorage>{
-
-    return new PatientsDataStorage(patientsSchema, isPatient);
-
-}*/
-
 export class PatientsDataStorage extends DataStorage<Patient> {}

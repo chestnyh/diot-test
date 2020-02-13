@@ -10,11 +10,11 @@ mongoose.connect(`mongodb://${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_DB}`, { us
 const db = mongoose.connection;
 
 db.on('error', function() {
-    console.log("error"); // TODO handler
+    // TODO handler
 });
 
 db.once('open', function() {
-    console.log("open"); // TODO handler
+    // TODO handler
 });
 
 export {mongoose};
