@@ -57,7 +57,7 @@ async function  main(){
 
         reportManager.add({level:"success",message:`Patient with ${result["Member ID"]} successfully added`});
 
-        if(result["CONSENT"] && result["Email Address"])
+        if(result["CONSENT"] === "Y" && result["Email Address"])
             emails.push(result["Email Address"])
 
 
@@ -66,6 +66,8 @@ async function  main(){
     await emailsDataStorage.insert({day: 1, emails});
 
     await db.close();
+
+    console.log("DONE");
 }
 
 main();
