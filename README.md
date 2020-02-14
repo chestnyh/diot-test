@@ -5,6 +5,8 @@
 
 ### Clone project:
 ``git clone https://github.com/chestnyh/diot-test.git``
+
+### Change directory:
 ``cd diot-test``
 
 ### Init project:
