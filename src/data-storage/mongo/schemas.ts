@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
 export const patientsSchema = new mongoose.Schema({
     'Program Identifier' : Number,
@@ -13,15 +13,13 @@ export const patientsSchema = new mongoose.Schema({
     'City': String,
     'State': String,
     'Zip code' : Number,
-    'Telephone number': Number,
+    'Telephone number': Schema.Types.Mixed,
     'Email Address': String,
     'CONSENT' : String,
     'Mobile Phone': Number
 });
 
 export const emailsSchema = new mongoose.Schema({
-    'Day 1': String,
-    'Day 2': String,
-    'Day 3': String,
-    'Day_4': String
+    'day': Number,
+    'emails': [String]
 });

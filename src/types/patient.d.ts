@@ -1,4 +1,4 @@
-export type Patient = {
+export interface IPatient {
     'Program Identifier' : number,
     'Data Source' : string,
     'Card Number' : number,

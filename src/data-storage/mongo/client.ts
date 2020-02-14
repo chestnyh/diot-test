@@ -17,4 +17,4 @@ db.once('open', function() {
     // TODO handler
 });
 
-export {mongoose};
+export {mongoose, db};

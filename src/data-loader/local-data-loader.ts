@@ -1,6 +1,6 @@
 import * as fs from "fs"
 import {IDataLoader} from "./index"
-import {Patient} from "../types/patient";
+import {IPatient} from "../types/patient";
 
 export interface LocalDataLoaderConfig{
     fileEncoding?: string,
@@ -8,7 +8,7 @@ export interface LocalDataLoaderConfig{
     valueSeparator?: string
 }
 
-export class LocalDataLoader implements IDataLoader<Patient>{
+export class LocalDataLoader implements IDataLoader<IPatient>{
 
     private _isReady : boolean = false;
     private _sourceFile : string = "";
@@ -73,7 +73,21 @@ export class LocalDataLoader implements IDataLoader<Patient>{
 
     }
 
-    private _validateData(data: string): any[]{ // TODO
+    static convertData(data: any){
+
+        data['Program Identifier'] = parseInt(data['Program Identifier']);
+        data['Card Number'] = parseInt(data['Card Number']);
+        data['Member ID'] = parseInt(data['Member ID']);
+        data['Date of Birth'] = new Date(data['Date of Birth']);
+        data['Zip code'] = parseInt(data['Zip code']);
+        data['Telephone number'] = parseInt(data['Telephone number']) ;
+        data['Mobile Phone'] = parseInt(data['Mobile Phone']);
+
+        return data;
+
+    }
+
+    private _validateData(data: string): any[]{
 
         const rows = data.split(this._rowSeparator);
         let keys: string[] = rows[0].split(this._valueSeparator);
@@ -85,7 +99,11 @@ export class LocalDataLoader implements IDataLoader<Patient>{
 
             const row: string[] = rows[i].split(this._valueSeparator);
 
-            result.push(LocalDataLoader.createObjFromArrays(keys, row));
+            result.push(
+                LocalDataLoader.convertData(
+                    LocalDataLoader.createObjFromArrays(keys, row)
+                )
+            );
 
 
         }
@@ -94,7 +112,7 @@ export class LocalDataLoader implements IDataLoader<Patient>{
 
     }
 
-    getData(): Promise<Patient[]> {
+    getData(): Promise<IPatient[]> {
 
         if(!this._isReady)
             throw new Error("Data source is not ready to get data. Your data source do not installed");

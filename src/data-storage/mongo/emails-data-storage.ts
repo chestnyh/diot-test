@@ -1,12 +1,19 @@
 import {DataStorage} from "./data-storage";
-import {Email} from "../../types/email";
-import {emailsSchema} from "./schemas"
-import * as mongoose from "mongoose";
+import {IEmail} from "../../types/email";
 
-export function isEmail(data: any): data is Email {
+export function emailConverter(data: IEmail): IEmail {
+
+    return {
+        "day":  data["day"],
+        "emails": data["emails"]
+    }
+
+}
+
+export function isEmail(data: any): data is IEmail {
 
     // TODO validation script
     return true;
 }
 
-export class EmailsDataStorage extends DataStorage<Email> {}
+export class EmailsDataStorage extends DataStorage<IEmail> {}

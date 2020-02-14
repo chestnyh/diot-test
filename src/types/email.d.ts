@@ -1,1 +1,4 @@
-export type Email = string[];
+export interface IEmail {
+   day: number,
+   emails: string[]
+}

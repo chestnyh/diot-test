@@ -1,8 +1,8 @@
-import {IReport} from "../index";
+import {IReport, IReportsManager} from "../index";
 import * as fs from "fs";
 import * as stream from "stream";
 
-export class FileReporter implements IReport{
+export class FileReporter implements IReportsManager{
 
     private _stream: stream.Writable;
     private readonly _file: string;
@@ -12,13 +12,13 @@ export class FileReporter implements IReport{
         this._stream = fs.createWriteStream(this._file, {flags: 'a'});
     }
 
-    add(level: string, message: string): void {
+    add(report: IReport): void {
 
-        const data = new Date();
-        const str = `${data.toISOString()}|${level}|${message}\n`;
+        const date = new Date();
+        const str = `${date.toISOString()}|${report.level}|${report.message}\n`;
 
         fs.appendFile(this._file, str, () => {
-
+            // TODO
         });
 
     }
