@@ -5,6 +5,7 @@
 
 ### Clone project:
 ``git clone https://github.com/chestnyh/diot-test.git``
+``cd diot-test``
 
 ### Init project:
 ``npm i``
